@@ -71,41 +71,30 @@ A: Pour modifier la configuration IP et DNS de notre systeme il faudra modifier 
     search home
     nameserver 10.10.0.1   <------
 ```
-La partie qui nous interesse est la derniere ligne, car elle spécifie l'adresse de notre `nameserver` (notre serveur DNS)
----
 
-Q5: Avec quelle commande pouvez-vous retirer les droits d’écriture à tous les utilisateurs du système, sauf à l’utilisateur propriétaire, pour le fichier « /etc/passwd » ?
+La partie qui nous interesse est la derniere ligne, car elle spécifie l'adresse de notre `nameserver` (notre serveur DNS), pour changer de serveur faut simplement changer l'adresse IP:
 
-
-A: `chmod go-rwx /etc/passwd`. `chmod` permet de changer les permissions d'un fichier. Dans ce cas avec l'option `go-rwx` on dit de supprimier (grace au `-`) les permissions écrire (`w`), lire (`r`) et executer (`x`) dans le groupe propriétaire (`g`) et les autres (`o`).
-
----
-
-Q6: Avec quelle commande pouvez-vous changer les propriétés du fichier « /etc/passwd » pour que votre groupe primaire en soit le groupe propriétaire ?
-
-
-A: `chown :debianvm /etc/passwd` la commande `chown` nous permet de modifier le propriétaire et groupe du fichier. Dans ce cas on modifie le groupe d'un fichier grace a l'option `:debianvm` (les `:` précisent que on souhaite changer le groupe et `debienvm` est le groupe souhaité)
----
-
-Q7: Avec quelle commande pouvez-vous changer les propriétés de tous les fichiers sous « /etc »  pour qu’ils appartiennent à votre utilisateur ?
-
-A: `chown -R debian /etc` nous permet de modifier l'utilisateur propriétaire du fichier. Avec l'option `-R` on dit a la commande de parcourir tout les fichiers du dossier `/etc`.
+```
+    domain home
+    search home
+    nameserver 8.8.8.8   <------
+```
 
 ---
 
-Q8: Considérons un fichier « /tmp/test.txt » qui est accessible en écriture par tous les utilisateurs du système. Avec quelle commande pouvez-vous vous assurer que seul le propriétaire du fichier soit capable de le supprimer, sans retirer les droits d’écritures aux autres utilisateurs ?
+Q5: Lorsque vous modifiez le fichier de configuration réseau, avec quelle(s) commande(s) pouvez-vous appliquer ce changement ?
 
 
-A: `chmod +t /tmp/test.txt`. `chmod` permet de changer les permissions d'un fichier. En rajoutant l'option `+t` on rajoute un "sticky bit", quand le propriétaire du fichier le rajoute, personne peut supprimer ce fichier sauf son propriétaire.
-
----
-
-Q9:  Avec quelle commande pouvez-vous vous assurer qu’un simple utilisateur puisse exécuter le binaire « /usr/bin/stat » en endossant l’identité de l’utilisateur qui en est propriétaire ?
-
-A: `chmod u+s /usr/bin/stat`. `chmod` permet de changer les permissions d'un fichier. Dans ce cas nous sommes connectés tant que propriétaire du fichier. On rajoute la permission `s` ce qui permet d'executer le fichier avec les permission du propriétaire.
+A: `systemctl restart networking.services`. `systemctl` permet de gerer les services qu'une machine peut utiliser, dans ce cas on ajoute le parametre `restart` pour relancer le service `nerworking.services` qui est le service qui gere notre réseau.
 
 ---
 
-Q10: Considérons que le dossier /tmp/temp-dir appartient au groupe « teams ». Avec quelle commande pouvez-vous vous assurer que tous les fichiers créés dans ce dossier appartiendront bien à ce groupe et pas au groupe primaire de l’utilisateur qui a créé le fichier ?
+Q6: Modifiez la configuration de votre interface réseau principale pour utiliser les paramètres fixe suivants :
+  1. Adresse IP : l’adresse IP que vous aviez obtenu via DHCP.
+  2. Masque de sous-réseau : le masque que vous aviez obtenu via DHCP.
+  3. Passerelle par défaut : l’adresse IP que vous aviez obtenu via DHCP.
+  4. Serveur de nom : utilisez l’adresse IP « 8.8.8.8 »
 
-A: `chmod g+s /tmp/temp-dir`. `chmod` permet de changer les permissions d'un fichier. Dans ce cas nous sommes connectés tant que propriétaire du dossier. On rajoute la permission `s` dans les permissions de groupe pour que tout nouveau fichier crée par peu importe l'utilisateur, aie comme propriétaire le groupe du do
+
+A: La machine virtuelle utilise comme environement graphique GNOME, des captures d'écran vont illustrer les étapes pour modifier la configuration IP de la machine et l'adresse du serveur DNS:
+
