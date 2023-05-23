@@ -27,7 +27,7 @@ Q4: Modifiez la configuration de votre interface réseau principale pour utilise
   4. Serveur de nom : utilisez l’adresse IP « 8.8.8.8 ».
 
 A: Pour modifier la configuration IP et DNS de notre systeme il faudra modifier quelques fichiers, pour cela on utilise le programme `nano`:
-  1. Pour modifier l'adresse IP donné via le DHCP en adresse IP statique nous devons modifier le fichier `/etc/network/interfaces`. 
+    Pour modifier l'adresse IP donné via le DHCP en adresse IP statique nous devons modifier le fichier `/etc/network/interfaces`. 
     Une fois dans le fichier, on peut appercevoir plusieurs lignes, les lignes commençant par un `#` on peut les ignorer car ce ne sont que des commentaires.
 
 ```
@@ -37,12 +37,41 @@ A: Pour modifier la configuration IP et DNS de notre systeme il faudra modifier 
     
     # The primary network interface
     allow-hotplug enp1s0
-    iface enp1s0 inet dhcp    <------
+    iface enp1s0 inet dhcp   <------
     # This is an autoconfigured IPv6 interface
     iface enp1s0 inet6 auto
 ```
-  La ligne qui nous importe le plus est `iface enp1s0 inet dhcp`, cette ligne nous dis que l'interface `enp1s0` a son adresse ip donné par le DHCP, nous devons modifier cette ligne pour lui donner une adresse IP statique.
+  1. La ligne qui nous importe le plus est `iface enp1s0 inet dhcp`, cette ligne nous dis que l'interface `enp1s0` a son adresse ip donné par le DHCP, nous devons modifier cette ligne pour lui donner une adresse IP statique. On remplace le `dhcp` a la fin de la ligne par static et on rajoute a la ligne avec une tabulation la configuration IP qu'on souhaite:
 
+```
+    allow-hotplug enp1s0
+    iface enp1s0 inet dhcp
+      address 192.168.1.2   <------
+```
+  2. Pour spécifier le masque de sous-réseau faudra rajouter le mask soit en notation CIDR ou en décimal, dans ce cas on souhaite lui donner le masque `255.255.255.0` (notation décimale) ou `/24` (notation CIDR)
+
+```
+    allow-hotplug enp1s0
+    iface enp1s0 inet dhcp
+      address 192.168.1.2/24   <------
+```
+
+  3. Pour spécifier la paserelle par default faudra rajouter une nouvelle ligne avec une tabulation spécifiant son adresse de cette maniere:
+
+```
+    allow-hotplug enp1s0
+    iface enp1s0 inet dhcp
+      address 192.168.1.2/24
+      gateway 192.168.1.1   <------
+```
+  En suite pour modifier l'adresse IP du DNS il faudra modifier le fichier `/etc/resolv.conf`, une fois ouvert le fichier avec le programme `nano` voici ce qu'on aperçoit:
+
+```
+    domain home
+    search home
+    nameserver 10.10.0.1   <------
+```
+La partie qui nous interesse est la derniere ligne, car elle spécifie l'adresse de notre `nameserver` (notre serveur DNS)
 ---
 
 Q5: Avec quelle commande pouvez-vous retirer les droits d’écriture à tous les utilisateurs du système, sauf à l’utilisateur propriétaire, pour le fichier « /etc/passwd » ?
