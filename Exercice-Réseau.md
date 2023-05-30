@@ -107,6 +107,7 @@ Une fois dans les parametres, on clique sur l'engrenage indiquée sur la fleche.
 La on peut voir noter configuration réseau (sans le masque de sous-réseau, mais grace a l'invite de commande on sait que c'est 255.255.255.0)
 Il faudra en suite cliquer sur IPv4 (1) et cocher "Manual" (2) et remplire les champ "Adresses" (3)
 ![](./assets/screen3.png "scren 3")
-Pour ces champs la on y mettera notre adresse IP "10.10.0.15" notre masque de sous-réseau "255.255.255.255.0" et en suite notre paserelle par defaut "10.10.0.1"
+
+Pour ces champs la on y mettera notre adresse IP "10.10.0.15" notre masque de sous-réseau "255.255.255.0" et en suite notre paserelle par defaut "10.10.0.1"
 Pour le faudra le mettre en mode "Manuel" (1) et remplire le champ avec notre nouvelle adresse IP 8.8.8.8 
 ![](./assets/screen4.png "scren 4")
